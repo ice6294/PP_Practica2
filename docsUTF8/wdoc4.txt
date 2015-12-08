@@ -13,7 +13,7 @@ Juvenile myoclonic epilepsy is an inherited genetic syndrome, but the way in whi
 --
 4. Diagnosis
 Diagnosis is typically made based on patient history. The physical examination should be normal. The primary diagnosis for JME is a good knowledge of patient history and the neurologist's familiarity with the myoclonic jerks, which are the hallmark of the syndrome.[2][3] Additionally, an electroencephalogram (EEG), will indicate a pattern of waves and spikes associated with the syndrome. The EEG generally shows a very characteristic pattern with generalized 3–4 Hz polyspike and slow wave discharges. These discharges are often provoked by photic stimulation (blinking lights) and sometimes hyperventilation. Both a magnetic resonance imaging scan (MRI) and computed tomography scan (CT scan) should appear normal in JME patients.
--- 
+--
 5. Management
 The most effective anti-epileptic medication for JME is valproic acid (Depakote). Women are often started on alternative medications due to valproic acid's high incidence of fetal malformations. Lamotrigine, levetiracetam, topiramate, and zonisamide are alternative anti-epileptic medications with less frequent incidence of pregnancy related complications, and they are often used first in females of childbearing age. Carbamazepine may aggravate primary generalized seizure disorders such as JME. Treatment is lifelong. Patients should be warned to avoid sleep deprivation.
 --

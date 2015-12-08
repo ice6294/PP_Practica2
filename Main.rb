@@ -1,8 +1,28 @@
 class Main
 
+	attr_accessor :papers
+
 	#INITIALIZE
 	def initialize
+		# Read the documents
+		@papers = Array.new
+		files = Dir.glob(DIR_DOCS).select{|e|File.file? e}
+		i = 0
+		files.each do |file|
+			require './Document'
+			p = Document.new(file,"doc")
+			@papers.insert(i,p)
+			i += 1
+		end
 
+		# Read the descriptions
+		files = Dir.glob(DIR_DESC).select{|e|File.file? e}
+		files.each do |file|
+			require './Document'
+			p = Document.new(file,"des")
+			@papers.insert(i,p)
+			i += 1
+		end
 	end
 
 	# CONSTANTS
@@ -19,13 +39,17 @@ class Main
 			#"\t(all) -> Show one by one all the articles with the acronyms.\n"  +
 			#"\t(top) -> Show most used acronyms of the articles.\n" +
 			#"\t(mode)\n" +
+			"\t(docs)\n" +
+			"\t(desc)\n" +
+			"\t(acr)\n" +
 			"\t(exit)\n\n"
 
 	PROMPT = "  $: "
 
 	BAR = "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
 
-	DIR = "/papersUTF8/*"
+	DIR_DOCS = "docsUTF8/*.xml"
+	DIR_DESC = "docsUTF8/*.txt"
 
 	# Main
 	def main
@@ -35,11 +59,19 @@ class Main
 			sel = gets.chomp
 			if sel == "exit"
 				break
-			elsif is_num?(sel)
+			elsif sel == "docs"
+				show_docs
+			elsif sel == "desc"
+				show_desc
+			elsif sel == "acr"
+				show_acr
+			elsif is_num? sel
 				option(sel)
 			else
 				print "Unrecognized buffer \"#{sel}\".\n"
 			end
+			print " Press enter: "
+			gets.chomp
 			print BAR
 		end
 	end
@@ -47,26 +79,70 @@ class Main
 	# Select option functions
 	def option(sel)
 		case sel.to_i
-			when 1 then print "\#Op1: Not implemented yet\n"
-			when 2 then print "\#Op2: Not implemented yet\n"
-			when 3 then print "\#Op3: Not implemented yet\n"
-			when 4 then print "\#Op4: Not implemented yet\n"
-			when 5 then print "\#Op5: Not implemented yet\n"
-			when 6 then print "\#Op6: Not implemented yet\n"
-			when 7 then print "\#Op7: Not implemented yet\n"
-			when 8 then print "\#Op8: Not implemented yet\n"
-			when 9 then print "\#Op9: Not implemented yet\n"
+			when 1 then op1
+			when 2 then op2
+			when 3 then print " \#Op3: Not implemented yet\n"
+			when 4 then print " \#Op4: Not implemented yet\n"
+			when 5 then print " \#Op5: Not implemented yet\n"
+			when 6 then print " \#Op6: Not implemented yet\n"
+			when 7 then print " \#Op7: Not implemented yet\n"
+			when 8 then print " \#Op8: Not implemented yet\n"
+			when 9 then print " \#Op9: Not implemented yet\n"
 			else print "Unrecognized buffer \"#{sel}\".\n"
 		end
-
 	end
 
 	def is_num?(str)
 		!!Integer(str) rescue false
 	end
 
-	# Opions
-	def op1()
+	def show_docs
+		papers.each do |p|
+			if p.is_doc?
+				puts "#{p.to_s}"
+			end
+		end
+	end
+
+	def show_desc
+		papers.each do |p|
+			if p.is_des?
+				puts "#{p.to_s}\n"
+			end
+		end
+	end
+
+	def show_acr
+		papers.each do |p|
+			puts "#{p.title}\n" + p.show_acr
+		end
+	end
+
+	# Options
+	def op1
+		print BAR + " Year: "
+		year = gets.chomp
+		if is_num? year
+			lista = Array.new
+			i = 0
+			papers.each do |p|
+				if p.is_from? year.to_i
+					puts p
+				end
+			end
+		else
+			print "Unrecognized buffer \"#{year}\".\n"
+		end
+	end
+
+	def op2
+		journals = Array.new
+		i = 0
+		papers.each do |p|
+			journals.insert(i,p.journal) unless (p.is_des? || journals.include?(p.journal))
+			i += 1
+		end
+		journals.each {|j| puts "\t#{j}"}
 	end
 
 end

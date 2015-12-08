@@ -1,9 +1,9 @@
 ﻿WDOC3
 2014
 Pediatric stroke
--- 
+--
 1. Introduction
-Pediatric stroke (PS) is a stroke that happens in children or adolescents. Stroke affects about 6 in 100,000 children. Stroke is a leading cause of death in children in the U.S.[1]
+Pediatric stroke (PS) is a stroke that happens in children or adolescents. Stroke affects about 6 in 100,000 children. Stroke is a leading cause of death in children in the U.S.[1].
 
 Stroke is different in children and newborns than it is in adults. Children have hemorrhagic strokes as often as they have ischemic strokes, while adults are more likely to have ischemic strokes. Sixty percent of pediatric strokes occur in boys. Causes of stroke are also different in children than they are in adults.[1]
 --

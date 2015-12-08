@@ -41,9 +41,9 @@ class Document
 				@sections.insert(i,s)
 				i += 1
 			end
-			puts "#{@id} - #{@title}\n"
+			#puts "#{@id} - #{@title}\n"
 			search(body)
-			gets.chomp
+			#gets.chomp
 		end
 	end
 
@@ -62,7 +62,7 @@ class Document
 
 	def show_acr
 		aux = ""
-		acronyms.each {|a| aux = aux + "\t#{a}\n"}
+		acronyms.each {|a| aux = aux + "\t#{a.to_s}\n"}
 		return aux
 	end
 
@@ -81,29 +81,55 @@ class Document
 	private
 
 		def search(body)
+			# Buscamos acrónimos
 			@acronyms = Array.new
 			m = /[^A-Z0-9]([A-Z]{2}[A-Z0-9\-]{0,3}[A-Z0-9]{1})[^A-Z0-9]/
-			results = body.scan(m).uniq
+			results = body.scan(m)
+			# Contamos duplicados
+			num = Hash.new(0)
+			results.each do |acr|
+				num[acr] += 1
+			end
+			# Eliminamos duplicados
+			results.uniq!
+			# Por cada acrónimo ...
 			i = 0
 			results.each do |acr|
-				# Buscamos forma expandida
+				# Buscamos patrón forma expandida
 				str = get_pat(acr[0])
 				pattern = Regexp.new str
-				expand = body.scan(pattern).uniq
+				# Escaneamos texto
+				exp = body.scan(pattern)
+				# Eliminamos duplicados
+				exp.uniq!
+				# Creamos acrónimo
 				require './Acronym'
-				@acronyms.insert(i,acr[0])
-				print "\t#{acr[0]} -> #{expand[0]}\n"
+				acronym = Acronym.new(acr[0],exp[0],num[acr])
+				@acronyms.insert(i,acronym)
+				#print "\t#{acr[0]} -> #{exp[0]}\n"
 				i += 1
 			end
-			#require 'enumerator'
 		end
 
 		def get_pat(acr)
-			pattern = "[^a-zA-Z0-9]([" + acr[0] + acr[0].downcase + "][ a-zA-Z0-9\\-]{0,12}"
+			pattern = "[^a-zA-Z0-9]([" + acr[0] + acr[0].downcase + "][ a-zA-Z0-9]{0,12}"
 			acr[1..-1].each_char do |a|
-				pattern = pattern + "[" + a + a.downcase + "][ a-zA-Z0-9\\-]{0,12}"
+				if a == "-"
+					pattern = pattern + "[" + "\\-" + "]?[ a-zA-Z0-9]{0,12}"
+				else
+					pattern = pattern + "[" + a + a.downcase + "][ a-zA-Z0-9]{0,12}"
+				end
 			end
-			pattern = pattern + ")[^a-zA-Z0-9\\-]{0,8}\\(?" + acr
+			pattern = pattern + ")[ ][^a-zA-Z0-9]{0,8}\\(?"
+			acr.each_char do |a|
+				if a == "-"
+					pattern = pattern + "\\-"
+				else
+					pattern = pattern + a
+				end
+			end
+			pattern = pattern + "\\)"
+			#puts pattern
 			return pattern
 		end
 

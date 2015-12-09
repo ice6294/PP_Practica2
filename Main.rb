@@ -46,17 +46,20 @@ class Main
 
 	PROMPT = "  $: "
 
-	BAR = "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n"
+	BAR = "\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n\n"
 
 	DIR_DOCS = "docsUTF8/*.xml"
 	DIR_DESC = "docsUTF8/*.txt"
 
 	# Main
 	def main
+		system 'clear'
+		print BAR
 		loop do
 			print MENU
 			print PROMPT
 			sel = gets.chomp
+			print BAR
 			if sel == "exit"
 				break
 			elsif sel == "docs"
@@ -70,8 +73,9 @@ class Main
 			else
 				print "Unrecognized buffer \"#{sel}\".\n"
 			end
-			print " Press enter: "
+			print " \nPress enter: "
 			gets.chomp
+			system 'clear'
 			print BAR
 		end
 	end
@@ -120,7 +124,7 @@ class Main
 
 	# Options
 	def op1
-		print BAR + " Year: "
+		print " Year: "
 		year = gets.chomp
 		if is_num? year
 			lista = Array.new

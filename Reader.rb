@@ -134,7 +134,7 @@ module Reader
 		def search(body)
 			# Buscamos acrónimos
 			acronyms = Array.new
-			m = /[^A-Z0-9]([A-Z]{2}[A-Z0-9\-]{0,3}[A-Z0-9]{1})[^A-Z0-9]/
+			m = /[^A-Z0-9]([A-Z]{2}[A-Z0-9\-]{0,3}[A-Z0-9])[^A-Z0-9]/
 			results = body.scan(m)
 			# Contamos duplicados
 			num = Hash.new(0)

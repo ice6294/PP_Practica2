@@ -1,0 +1,17 @@
+Author: Luis León Gámez (GII+GIS)
+
+Files:
+	· Acronym.rb
+	· Cluster.rb
+	· Description.rb
+	· Document.rb
+	· Main.rb
+	· Reader.rb
+	· Scientific.rb
+	· Section.rb
+	· Utils.rb
+
+Folders:
+	· docsUTF8
+
+Execute command: ruby Main.rb

@@ -5,10 +5,11 @@ class Main
 
 	include Utils, Reader
 
-	attr_accessor :papers
+	attr_accessor :papers, :clusters
 
 	def initialize
 		@papers = read(DIR)
+		@clusters = clusterize(papers)
 	end
 
 	OP = ['','op1','op2','op3','op4','op5','op6','op7','op8','op9', 'op10']
@@ -34,7 +35,7 @@ class Main
 			elsif sel == "all"
 				show_all
 			elsif sel == "top"
-				#show_acr
+				show_top
 			elsif is_num? sel
 				option(sel)
 			else
@@ -97,6 +98,7 @@ class Main
 	def show_all
 		i = 0
 		while (i < papers.length) && (i >= 0)
+			print "\n\n\n\n\n\n\n\n\n"
 			system 'clear'
 			print "(#{i}) "
 			print papers[i].all
@@ -115,6 +117,12 @@ class Main
 				print " \nPress enter: "
 				gets
 			end
+		end
+	end
+
+	def show_top
+		papers.each do |p|
+			puts "#{p.show_top}\n"
 		end
 	end
 
@@ -212,7 +220,59 @@ class Main
 	end
 
 	def op9
-		
+		show_clusters(clusters)
+	end
+
+	def show_clusters(clusters)
+		i = 0
+		while i < clusters.length
+			cluster = clusters[i]
+			if !cluster.empty?
+				puts BAR
+				print "CLUSTER #{i+1}"
+				if cluster.acronym != ""
+					puts " (#{cluster.acronym})"
+				else
+					puts "\n"
+				end
+				puts cluster
+			else
+				puts "\n"
+			end
+			i += 1
+		end
+	end
+
+	def op10
+		puts	"\n\t> Number of groups: #{clusters.length}\n\n" +
+				"\t> Average of documents by group:\t\n\n"
+
+		n_doc = []
+		n_des = []
+		i = 0
+		clusters.each do |c|
+			n_doc.insert(i,clusters[i].num_doc)
+			n_des.insert(i,clusters[i].num_des)
+			i += 1
+		end
+		for i in 0..clusters.length-1
+			puts	"\t\t- CLUSTER #{i}:\n" + "\t\t\tscientific articles: #{n_doc[i]}/#{clusters[i].num}\n" +
+					"\t\t\twikipedia descriptions: #{n_des[i]}/#{clusters[i].num}\n\n"
+		end
+
+		same = 0
+		clusters.each do |c|
+			same += 1 unless c.all_same_year
+		end
+		puts "\t> Number of clusters with all documents same year: #{same}\n\n"
+		puts "\t> Number of clusters with all documents distinct year: #{clusters.length - same}\n\n"
+
+		alone = 0
+		clusters.each do |c|
+			alone += 1 unless !c.alone?
+		end
+		puts "\t> Number of clusters with only one document: #{alone}\n"
+
 	end
 
 end

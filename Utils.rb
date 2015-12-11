@@ -9,13 +9,13 @@ module Utils
 			"\t5) Show acronyms from the articles published in a given year.\n" +
 			"\t6) Show acronyms with the numer of times that appears in an article from a given ID.\n" +
 			"\t7) Show all IDs and titles of the articles without any acronyms.\n" +
-			"\t8) Show all information from all articles.\n" +
+			"\t8) Show all information from all articles with a given acronym.\n" +
 			"\t9) Cluster articles related to the same ilness/topic.\n\n" +
 			"\t(complete) -> Complete between each document the missing expansion forms of acronyms.\n" +
 			"\t(docs) -> Show all the Scientific Articles.\n" +
 			"\t(desc) -> Show all the Wikipedia Descriptions.\n" +
 			"\t(all) -> Show one by one all the articles with the acronyms.\n"  +
-			#"\t(top) -> Show most used acronyms of the articles.\n" +
+			"\t(top) -> Show most used acronyms of each articles.\n" +
 			"\t(exit)\n\n"
 
 	PROMPT = "  $: "

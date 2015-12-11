@@ -57,6 +57,13 @@ class Document
 			return aux
 		end
 
+		def show_top
+			acrs = top
+			aux = ""
+			acrs.each {|a| aux = aux + "\t\t#{a.show}\n" }
+			return "\t> #{title}\n" + aux + "\n\n"
+		end
+
 		def show
 			return title
 		end
@@ -71,13 +78,35 @@ class Document
 			return false
 		end
 
+		def contains_in_top(acronym)
+			top.each do |a|
+				if acronym == a.acr
+					return true
+				end
+			end
+			return false
+		end
+
 		def top
-			n = Math.log(acronyms.length,2)
+			n = Math.log(acronyms.length + 1,2)
 			return acronyms[0..n]
 		end
 
-		def afinity?(paper)
-
+		def afinity(paper)
+			acrs1 = paper.top
+			acrs2 = top
+			lim = 0
+			if acrs1.length < acrs2.length
+				lim = acrs1.length
+			else
+				lim = acrs2.length
+			end
+			i = 0
+			while i < lim
+				break unless acrs1.include? acrs2[i]
+				i += 1
+			end 
+			return i
 		end
 
 	# PROTECTED METHODS

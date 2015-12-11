@@ -6,6 +6,7 @@ module Reader
 	R1 = 12 # standar -> 12
 	R2 = 8 # standar -> 8
 
+	# READ DIRECTORY
 	def read(dir)
 		papers = Array.new
 		files = Dir.glob(dir).select{|e|File.file? e}
@@ -67,6 +68,44 @@ module Reader
 		end
 	end
 
+	def clusterize(papers)
+		aux = papers.dup
+		clusters = Array.new
+		c = 0
+		while !aux.empty?
+			p = aux[0]
+			aux.delete(p)
+
+			require './Cluster'
+			cluster = Cluster.new
+			cluster.add_doc(p)
+			cluster.set_acronym
+
+			puts "Cluster #{c} , #{p.id}, #{cluster.acronym}\n"
+
+			aux.each do |p2|
+				if (cluster.has_acronym? || p2.acronyms.empty?)
+					break
+				elsif (p2.contains_in_top (cluster.acronym))
+					cluster.add_doc(p2)
+					aux.delete(p2)
+				end
+			end
+
+			clusters.insert(c,cluster)
+			c += 1
+
+			clusters.sort! do |a,b|
+				if a.empty? || b.empty?
+					0
+				else
+					(a.num <=> b.num) * -1
+				end
+			end
+		end
+		return clusters
+	end
+
 	private
 
 		# READ SECTIONS
@@ -120,7 +159,6 @@ module Reader
 				require './Acronym'
 				acronym = Acronym.new(acr[0],exp[0],num[acr])
 				acronyms.insert(i,acronym)
-				#print "\t#{acr[0]} -> #{exp[0]}\n"
 				i += 1
 			end
 			return acronyms.sort! { |a,b| (a.num <=> b.num)*-1 }

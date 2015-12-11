@@ -2,7 +2,7 @@ class Acronym
 
 	attr_accessor :acr, :exp, :num
 
-	def initialize(acr, exp, num)
+	def initialize(acr = "", exp = "", num = 0)
 		@acr = acr
 		@exp = exp
 		@num = num
